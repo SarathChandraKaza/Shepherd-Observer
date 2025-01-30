@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class Son : MonoBehaviour, IMovement
 {
-    private GameObject m_gameObject;
+    private Rigidbody m_Rigidbody;
+    [SerializeField] private MovementLogic m_movementLogic;
+    [SerializeField] float moveForce = 5.0f;
+    [SerializeField] float jumpForce = 5.0f;
     [SerializeField] SubjectClass m_subjectClass;
 
     void Awake()
     {
-        m_gameObject = GetComponent<GameObject>();
+        m_Rigidbody = this.gameObject.GetComponent<Rigidbody>();
     }
 
     void Start()
@@ -18,16 +21,19 @@ public class Son : MonoBehaviour, IMovement
     public void Jump()
     {
         Debug.Log("Son is jumping");
+        m_movementLogic.Jump(jumpForce, m_Rigidbody);
     }
 
     public void MoveLeft()
     {
         Debug.Log("Son is moving left");
+        m_movementLogic.MoveLeft(moveForce, m_Rigidbody);
     }
 
     public void MoveRight()
     {
         Debug.Log("Son is moving right");
+        m_movementLogic.MoveRight(moveForce, m_Rigidbody);
     }
     
 }

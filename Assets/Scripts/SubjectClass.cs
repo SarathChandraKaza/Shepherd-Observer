@@ -23,7 +23,7 @@ public class SubjectClass : MonoBehaviour
     {
         foreach (var observer in m_MovementList)
         {
-            observer.MoveRight();
+            observer.MoveLeft();
         }
     }
     public void MakeAllObserversJump()
