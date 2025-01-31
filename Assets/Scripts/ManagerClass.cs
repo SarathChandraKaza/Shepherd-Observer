@@ -16,6 +16,21 @@ public class ManagerClass : MonoBehaviour
         m_rigidBody= this.gameObject.GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            OnJumpButtonClicked();
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            OnRightButtonClicked();
+        }
+        if( Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) 
+        { 
+            OnLeftButtonClicked();
+        }
+    }
     void Start()
     {
         moveLeftButton.onClick.AddListener(OnLeftButtonClicked);
