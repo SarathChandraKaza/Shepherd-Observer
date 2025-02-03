@@ -1,33 +1,39 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Subject Class is the top level class which will be observed by the observers. 
+/// When we call Jump, Move Right and Move Left for the subject we also call them for the observers through the ManagerClass.
+/// </summary>
 public class SubjectClass : MonoBehaviour
 {
     [SerializeField] ManagerClass m_managerClass;
-    [SerializeField] private MovementLogic m_movementLogic;
-    private Rigidbody m_rigidBody;
+    [SerializeField] MovementLogic m_movementLogic;
+
     [SerializeField] float moveForce = 5.0f;
     [SerializeField] float jumpForce = 5.0f;
+
     [SerializeField] Button moveLeftButton;
     [SerializeField] Button moveRightButton;
     [SerializeField] Button jumpButton;
+
+    private Rigidbody m_rigidBody;
     void Awake()
     {
-        m_rigidBody= this.gameObject.GetComponent<Rigidbody>();
+        m_rigidBody = this.gameObject.GetComponent<Rigidbody>();
     }
-
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
         {
             OnJumpButtonClicked();
         }
-        if(Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
             OnRightButtonClicked();
         }
-        if( Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) 
-        { 
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
             OnLeftButtonClicked();
         }
     }
@@ -57,6 +63,4 @@ public class SubjectClass : MonoBehaviour
         m_movementLogic.Jump(jumpForce, m_rigidBody);
         m_managerClass.MakeAllObserversJump();
     }
-
-    
 }

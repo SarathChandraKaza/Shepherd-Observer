@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// This script deals with the movement logic. Instead of directly coupling the logic, 
+/// it is better to have it as a seperarte class.
+/// </summary>
 public class MovementLogic : MonoBehaviour
 {
     public void MoveLeft(float moveForce, Rigidbody rb)
@@ -16,6 +20,4 @@ public class MovementLogic : MonoBehaviour
     {
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
-
-
 }
