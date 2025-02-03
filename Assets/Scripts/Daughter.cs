@@ -6,7 +6,7 @@ public class Daughter : MonoBehaviour, IMovement
     [SerializeField] private MovementLogic m_movementLogic;
     [SerializeField] float moveForce = 5.0f;
     [SerializeField] float jumpForce = 5.0f;
-    [SerializeField] SubjectClass m_subjectClass;
+    [SerializeField] ManagerClass m_managerClass;
 
     void Awake()
     {
@@ -14,7 +14,7 @@ public class Daughter : MonoBehaviour, IMovement
     }
     void Start()
     {
-        m_subjectClass.AddObserver(this);
+        m_managerClass.AddObserver(this);
     }
 
 
