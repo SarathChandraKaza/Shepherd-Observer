@@ -1,54 +1,204 @@
-# Shepherd Observer 🐑👀
+# **Shepherd Observer 🐑**  
+A gamified Unity project demonstrating the **Observer Pattern** using an analogy of sheep.  
 
+---
 
-A gamified Unity project demonstrating the Observer Pattern using an analogy of sheeps. The Mother Sheep (Subject Class) acts as the subject, and the Son and Daughter sheep act as observers. When the mother moves or jumps, all observing sheep follow her actions.
+## **📌 What is the Observer Pattern?**  
+The **Observer Pattern** is a **behavioral design pattern** where:  
+- A **Subject** maintains a list of **Observers**.  
+- When the **Subject's state changes**, it **notifies** all observers.  
+- This ensures **loose coupling** between objects.  
 
+---
 
-📌 What is the Observer Pattern?
-The Observer Pattern is a behavioral design pattern where an object (the Subject) maintains a list of dependents (the Observers) that need to be updated whenever the subject's state changes. This helps in loosely coupling objects.
+## **📝 How This Project Implements It**
+| Component         | Role |
+|------------------|------|
+| **Mother Sheep** (SubjectClass) | **Subject**: Handles user input and notifies observers. |
+| **Son & Daughter Sheep** (IMovement Implementers) | **Observers**: Follow the mother when notified. |
+| **ManagerClass** | Manages observers and sends notifications. |
+| **IMovement** | Defines the movement actions. |
 
+---
 
-📝 In this project:-
-Mother Sheep (SubjectClass) = Subject
-Son & Daughter Sheep (IMovement Implementers) = Observers
-ManagerClass = Manages Observers and Notifies Changes
+## **🎮 How It Works**
+![Shepherd Observer-GIF](https://github.com/user-attachments/assets/e8807ea9-b71d-4447-b92d-d895215a6747)
+### **1️⃣ Mother Sheep Moves**  
+The **player controls** the **Mother Sheep** using **keyboard** or **UI buttons**.  
 
+```csharp
+private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+    {
+        OnJumpButtonClicked();
+    }
+    if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+    {
+        OnRightButtonClicked();
+    }
+    if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+    {
+        OnLeftButtonClicked();
+    }
+}
+```
+---
 
-🎮 How It Works:-
-1. Mother Sheep moves → She moves based on player input (buttons or keyboard).
-   
-2. Observers (Son & Daughter) follow → Whenever the mother moves, all observer sheep also move in the same direction.
-   
-3. Decoupled Interaction → Observers don’t directly interact with the mother; they just respond to notifications from the subject.
+### **2️⃣ Observers Follow**  
+Whenever the **Mother Sheep moves**, the **ManagerClass** **notifies** all observers (Son & Daughter).  
 
+```csharp
+public void MakeAllObserversMoveRight()
+{
+    foreach (var observer in m_MovementList)
+    {
+        observer.MoveRight();
+    }
+}
+```
 
-   
-🛠️ Project Structure:-
-1. SubjectClass (Mother Sheep)
-Handles user input (buttons/keys).
-Moves itself and notifies all observers.
+---
 
-2. ManagerClass (Observer Manager)
-Maintains a list of all observers.
-Notifies them when an action occurs.
+### **3️⃣ Decoupled Interaction**  
+Observers **don't directly interact** with the mother; they just **respond to notifications**.  
 
-3. Son & Daughter (Observers)
-Implement IMovement interface.
-React to the subject's notifications.
+```csharp
+public class Son : MonoBehaviour, IMovement
+{
+    public void MoveRight()
+    {
+        Debug.Log("Son is moving right");
+    }
+}
+```
 
-4. IMovement (Interface)
-Defines movement actions.
+---
 
+## **🛠️ Project Structure**
+### **1️⃣ SubjectClass (Mother Sheep)**
+- **Handles user input** (buttons/keys).  
+- **Moves itself** and **notifies all observers**.  
 
-🚀 Code Flow
-1. Observers Register: 
-When the game starts, Son and Daughter register themselves with SubjectClass.
+```csharp
+public class SubjectClass : MonoBehaviour
+{
+    [SerializeField] ManagerClass m_managerClass;
 
-2. User Input (Mother Moves):
-When a button or key is pressed, SubjectClass moves the mother and notifies all observers:
+    private void OnRightButtonClicked()
+    {
+        Debug.Log("Mother is moving right");
+        m_managerClass.MakeAllObserversMoveRight();
+    }
+}
+```
 
-3. Observers Respond:
-When notified, each observer (Son & Daughter) executes the corresponding movement.
+---
 
+### **2️⃣ ManagerClass (Observer Manager)**
+- **Maintains a list** of all observers.  
+- **Notifies them** when an action occurs.  
 
-⚠ If you have any questions, feel free to open an issue. 
+```csharp
+public class ManagerClass : MonoBehaviour
+{
+    private List<IMovement> m_MovementList = new List<IMovement>();
+
+    public void AddObserver(IMovement observer)
+    {
+        if (!m_MovementList.Contains(observer))
+        {
+            m_MovementList.Add(observer);
+        }
+    }
+
+    public void MakeAllObserversJump()
+    {
+        foreach (var observer in m_MovementList)
+        {
+            observer.Jump();
+        }
+    }
+}
+```
+
+---
+
+### **3️⃣ Son & Daughter (Observers)**
+- **Implement the `IMovement` interface**.  
+- **React to subject’s notifications**.  
+
+```csharp
+public class Daughter : MonoBehaviour, IMovement
+{
+    public void Jump()
+    {
+        Debug.Log("Daughter is jumping");
+    }
+
+    public void MoveLeft()
+    {
+        Debug.Log("Daughter is moving left");
+    }
+
+    public void MoveRight()
+    {
+        Debug.Log("Daughter is moving right");
+    }
+}
+```
+
+---
+
+### **4️⃣ IMovement (Interface)**
+Defines movement actions for **all observers**.  
+
+```csharp
+public interface IMovement
+{
+    void Jump();
+    void MoveRight();
+    void MoveLeft();
+}
+```
+
+---
+
+## **🚀 Code Flow**
+### **1️⃣ Observers Register Themselves**  
+When the game starts, **Son and Daughter register** themselves with **ManagerClass**.  
+
+```csharp
+void Start()
+{
+    m_managerClass.AddObserver(this);
+}
+```
+
+---
+
+### **2️⃣ User Input (Mother Moves)**
+When a button or key is pressed, **SubjectClass moves the Mother Sheep and notifies all observers**.  
+
+```csharp
+private void OnJumpButtonClicked()
+{
+    Debug.Log("Mother is jumping");
+    m_managerClass.MakeAllObserversJump();
+}
+```
+
+---
+
+### **3️⃣ Observers Respond**
+Each observer (**Son & Daughter**) executes the **corresponding movement**.  
+
+```csharp
+public void Jump()
+{
+    Debug.Log("Son is jumping");
+}
+```
+---
+## **❓ Need Help?**
+If you have any **questions**, feel free to **open an issue**.  
