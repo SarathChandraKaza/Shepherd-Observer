@@ -1,9 +1,9 @@
-# **Shepherd Observer 🐑**  
+# **Shepherd Observer**  
 A gamified Unity project demonstrating the **Observer Pattern** using an analogy of sheep.  
 
 ---
 
-## **📌 What is the Observer Pattern?**  
+## **What is the Observer Pattern?**  
 The **Observer Pattern** is a **behavioral design pattern** where:  
 - A **Subject** maintains a list of **Observers**.  
 - When the **Subject's state changes**, it **notifies** all observers.  
@@ -11,7 +11,7 @@ The **Observer Pattern** is a **behavioral design pattern** where:
 
 ---
 
-## **📝 How This Project Implements It**
+## **How This Project Implements It**
 | Component         | Role |
 |------------------|------|
 | **Mother Sheep** (SubjectClass) | **Subject**: Handles user input and notifies observers. |
@@ -21,7 +21,7 @@ The **Observer Pattern** is a **behavioral design pattern** where:
 
 ---
 
-## **🎮 How It Works**
+## **How It Works**
 ![Shepherd Observer-GIF](https://github.com/user-attachments/assets/e8807ea9-b71d-4447-b92d-d895215a6747)
 ### **1️⃣ Mother Sheep Moves**  
 The **player controls** the **Mother Sheep** using **keyboard** or **UI buttons**.  
@@ -75,7 +75,7 @@ public class Son : MonoBehaviour, IMovement
 
 ---
 
-## **🛠️ Project Structure**
+## **🛠Project Structure**
 ### **1️⃣ SubjectClass (Mother Sheep)**
 - **Handles user input** (buttons/keys).  
 - **Moves itself** and **notifies all observers**.  
@@ -95,7 +95,7 @@ public class SubjectClass : MonoBehaviour
 
 ---
 
-### **2️⃣ ManagerClass (Observer Manager)**
+### **2️ManagerClass (Observer Manager)**
 - **Maintains a list** of all observers.  
 - **Notifies them** when an action occurs.  
 
@@ -124,7 +124,7 @@ public class ManagerClass : MonoBehaviour
 
 ---
 
-### **3️⃣ Son & Daughter (Observers)**
+### **3️Son & Daughter (Observers)**
 - **Implement the `IMovement` interface**.  
 - **React to subject’s notifications**.  
 
@@ -150,7 +150,7 @@ public class Daughter : MonoBehaviour, IMovement
 
 ---
 
-### **4️⃣ IMovement (Interface)**
+### **4️IMovement (Interface)**
 Defines movement actions for **all observers**.  
 
 ```csharp
@@ -164,7 +164,7 @@ public interface IMovement
 
 ---
 
-## **🚀 Code Flow**
+## **Code Flow**
 ### **1️⃣ Observers Register Themselves**  
 When the game starts, **Son and Daughter register** themselves with **ManagerClass**.  
 
@@ -200,5 +200,5 @@ public void Jump()
 }
 ```
 ---
-## **❓ Need Help?**
+## **Need Help?**
 If you have any **questions**, feel free to **open an issue**.  
